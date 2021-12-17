@@ -2,16 +2,12 @@ import styles from "./Summarize.module.css";
 import { Button, TextareaAutosize } from '@mui/material';
 import { DropzoneAreaBase, FileObject } from 'material-ui-dropzone';
 import { useState } from 'react';
-
-enum InputMode {
-  text, url, files,
-}
+import { InputMode } from "./InputMode";
 
 const Summarizer = () => {
   const [mode, setMode] = useState(InputMode.text);
   const [files, setFiles] = useState<FileObject[]>([]);
   const [input, setInput] = useState("");
-
 
   const getInput = () => {
     switch (mode) {
@@ -23,9 +19,7 @@ const Summarizer = () => {
         />;
         break;
       case InputMode.files:
-        return (
-          <DropzoneAreaBase fileObjects={files} acceptedFiles={[]} />
-        );
+        return <DropzoneAreaBase fileObjects={files} acceptedFiles={[".txt"]} />;
         break;
       default:
         break;
