@@ -1,0 +1,1 @@
+# succintcty-frontend
