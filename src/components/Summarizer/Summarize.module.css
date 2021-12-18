@@ -1,6 +1,7 @@
 :root {
     --buttonColor: white;
     --buttonBackground: #6B38FB;
+    --textareaHeight: 300px;
 }
 
 .summarizer {
@@ -77,12 +78,12 @@
 }
 
 .inputWrap {
-    height: 240px;
+    height: var(--textareaHeight);
 }
 
 .outputWrap {
     width: 40%;
-    height: 240px;
+    height: var(--textareaHeight);
 }
 
 .fileUploadContainer {

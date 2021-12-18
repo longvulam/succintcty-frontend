@@ -9,8 +9,7 @@ import { InputMode } from "./InputMode";
 import { useDropzone } from "react-dropzone";
 import { baseUrl } from "../../appConfig";
 import FillerContent from "../FillerContent/FillerContent";
-
-const api = "api/v1";
+import { fetchSummary } from "../../api/summary.api";
 
 const textEndPoint = "text";
 const urlEndPoint = "url";
@@ -93,9 +92,9 @@ const Summarizer = () => {
     };
 
     setCanSubmit(false);
-    const requestSummary = async () => {
+    const requestSummary = async (payload: any, endpoint: string, config: AxiosRequestConfig) => {
       try {
-        const { data } = await axios.post(`${baseUrl}/${api}/${getEndPoint()}`, payload, config);
+        const data = await fetchSummary(payload, getEndPoint(), config);
         if (data.summary instanceof Array) {
           setSummary(data.summary);
           setAlert(successAlert);
@@ -109,10 +108,9 @@ const Summarizer = () => {
 
       setShowSnackBar(true);
       setCanSubmit(true);
-
     }
 
-    requestSummary();
+    requestSummary(payload, getEndPoint(), config);
   }
 
   const inputField = () => {

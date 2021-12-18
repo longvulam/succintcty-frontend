@@ -13,12 +13,13 @@ interface InputModeButtonsProps {
 
 const defaultStyle: CSSProperties = {
 }
+
 const activeStyle: CSSProperties = {
   opacity: 1,
 }
 
 const InputModeButtons = (props: InputModeButtonsProps) => {
-  const { canSubmit, setMode, mode, rowLength, setRowLength } = props;
+  const { canSubmit, setMode, mode, rowLength: summaryLength, setRowLength } = props;
 
   const dropdown = <Select
     labelId="modesSelect-label"
@@ -56,13 +57,13 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
 
     <div className={styles.rowLength}>
 
-      <InputLabel htmlFor="rowLengthInput">
-        Row length
+      <InputLabel htmlFor="summaryLengthInput">
+        Summary length
       </InputLabel>
 
       <TextField
-        id="rowLengthInput"
-        value={rowLength === 0 ? undefined : rowLength}
+        id="summaryLengthInput"
+        value={summaryLength === 0 ? undefined : summaryLength}
         onChange={e => setRowLength(Number(e.target.value))}
         type="number"
       />
