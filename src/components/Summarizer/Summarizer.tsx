@@ -1,16 +1,13 @@
 import styles from "./Summarize.module.css";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
 import InputModeButtons from "./InputModeSelector";
-import LoginForm from "../LoginForm/LoginForm";
-import axios, { AxiosRequestConfig } from "axios";
+import  { AxiosRequestConfig } from "axios";
 import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
 import { useState } from 'react';
 import { InputMode } from "./InputMode";
 import { useDropzone } from "react-dropzone";
-import { baseUrl } from "../../appConfig";
 import FillerContent from "../FillerContent/FillerContent";
 import { fetchSummary } from "../../api/summary.api";
-import { Console } from "console";
 
 const textEndPoint = "text";
 const urlEndPoint = "url";

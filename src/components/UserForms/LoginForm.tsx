@@ -1,11 +1,17 @@
 import styles from "./LoginForm.module.css";
 import { useState } from "react";
+import { Button } from "@mui/material";
+import { requestLogin } from "../../api/user.api";
 
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const tryLogin = async () => {
+    const res = await requestLogin({ email: username, password });
+    console.log(res);
+  }
 
   return (
     <div className={styles.container}>
@@ -19,6 +25,7 @@ const LoginForm = () => {
           <label htmlFor="password">password: </label>
           <input id="password" type="password" value={password} onChange={e => setPassword(e.currentTarget.value)} />
         </p>
+        <Button onClick={tryLogin}>Submit</Button>
       </form>
     </div>
   )
