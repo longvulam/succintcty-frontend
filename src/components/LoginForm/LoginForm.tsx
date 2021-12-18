@@ -3,13 +3,12 @@ import { useState } from "react";
 
 
 const LoginForm = () => {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Login</h3>
       <form action="#" className={styles.form}>
         <p>

@@ -176,7 +176,6 @@ const Summarizer = () => {
 
       <div className={styles.bottomContent}>
         <FillerContent />
-        <LoginForm />
       </div>
 
       <Snackbar
