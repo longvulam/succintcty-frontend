@@ -11,17 +11,21 @@
     gap: 20px;
 }
 
-
 .modeButtons {
     display: flex;
     justify-content: left;
     align-items: center;
-    width: 100%;
-    padding-left: 19%;
+    align-self: flex-start;
+    margin-left: 9.6%;
     gap: 12px;
 }
 
-.modeLabel {}
+.bottomContent {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    gap: 10%;
+}
 
 .button {
     color: var(--buttonColor) !important;
@@ -56,7 +60,6 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    gap: 1%;
 }
 
 .input {
@@ -65,10 +68,12 @@
     flex-direction: column;
 }
 
-.inputWrap input,
-textarea {
+.outputWrap textarea,
+.inputWrap textarea {
     width: 100% !important;
     height: 100% !important;
+    overflow-y: auto !important;
+    resize: none;
 }
 
 .inputWrap {
@@ -81,8 +86,12 @@ textarea {
 }
 
 .fileUploadContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 100%;
-    height: 100%;
+    height: 98%;
     padding: 1%;
     border: lightgray dashed;
     border-radius: 2px;
@@ -92,4 +101,15 @@ textarea {
     color: #bdbdbd;
     outline: none;
     transition: border .24s ease-in-out;
+}
+
+.rowLength {
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+}
+.rowLength > label {
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
 }
