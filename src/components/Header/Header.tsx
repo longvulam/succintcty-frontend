@@ -30,7 +30,7 @@ const Header = () => {
 
   return (
     <div className={styles.header}>
-      <img className={styles.logo} src={appLogo} alt="logo of succinct" />
+      <img className={styles.logo} src={appLogo} alt="logo of Succinct" />
 
       <div className={styles.userButtonsContainer}>
         <Button variant="contained"
