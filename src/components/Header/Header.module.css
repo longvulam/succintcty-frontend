@@ -11,9 +11,11 @@
   margin: 0;
 }
 
-.loginFormBtn{
+.loginFormBtn {
   position: absolute !important;
   right: 0;
-  padding: 40px;
+  margin: 40px !important;
   color: white;
+  background-color: #252525 !important;
+  
 }
