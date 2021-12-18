@@ -1,5 +1,5 @@
 import styles from "./Summarize.module.css";
-import { Button, MenuItem, Select } from "@mui/material"
+import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import { InputMode } from "./InputMode"
 import { CSSProperties } from "react";
 
@@ -7,6 +7,8 @@ interface InputModeButtonsProps {
   setMode: (value: InputMode) => void;
   canSubmit: boolean;
   mode: InputMode;
+  rowLength?: number;
+  setRowLength: (value: number) => void;
 }
 
 const defaultStyle: CSSProperties = {
@@ -16,7 +18,7 @@ const activeStyle: CSSProperties = {
 }
 
 const InputModeButtons = (props: InputModeButtonsProps) => {
-  const { canSubmit, setMode, mode } = props;
+  const { canSubmit, setMode, mode, rowLength, setRowLength } = props;
 
   const dropdown = <Select
     labelId="modesSelect-label"
@@ -27,7 +29,7 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
       setMode(value);
     }}
   >
-    {Object.entries(InputMode).map(entry =>{
+    {Object.entries(InputMode).map(entry => {
       const key = entry[0];
       return <MenuItem key={key} value={entry[1]}>{key}</MenuItem>;
     })
@@ -50,13 +52,23 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
           {key}
         </Button>
       )
-    }
+    })}
 
-    )}
+    <div className={styles.rowLength}>
 
-    {/* {dropdown} */}
+      <InputLabel htmlFor="rowLengthInput">
+        Row length
+      </InputLabel>
 
-  </div>)
+      <TextField
+        id="rowLengthInput"
+        value={rowLength === 0 ? undefined : rowLength}
+        onChange={e => setRowLength(Number(e.target.value))}
+        type="number"
+      />
+    </div>
+
+  </div >)
 }
 
 export default InputModeButtons;

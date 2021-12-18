@@ -1,13 +1,15 @@
 import styles from "./Summarize.module.css";
+import CircularProgressWithLabel from "./CircularProgressWithLabel";
+import InputModeButtons from "./InputModeSelector";
+import LoginForm from "../LoginForm/LoginForm";
+import axios, { AxiosRequestConfig } from "axios";
 import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
 import { useState } from 'react';
 import { InputMode } from "./InputMode";
 import { useDropzone } from "react-dropzone";
-import axios, { AxiosRequestConfig } from "axios";
-import CircularProgressWithLabel from "./CircularProgressWithLabel";
-import InputModeButtons from "./InputModeSelector";
+import { baseUrl } from "../../appConfig";
+import FillerContent from "../FillerContent/FillerContent";
 
-const baseUrl = "https://succinct-api.azurewebsites.net";
 const api = "api/v1";
 
 const textEndPoint = "text";
@@ -35,33 +37,15 @@ const Summarizer = () => {
   } = useDropzone({
     accept: '.txt'
   });
-  const [inputContent, setInputContent] = useState("");
 
+  const [inputContent, setInputContent] = useState("");
   const [loadProgress, setLoadProgress] = useState(0);
   const [canSubmit, setCanSubmit] = useState(true);
-
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [alert, setAlert] = useState(successAlert);
-
   const [summary, setSummary] = useState<string[]>([]);
+  const [rowLength, setRowLength] = useState<number>();
 
-  const getInput = () => {
-    switch (mode) {
-      case InputMode.Files:
-        if (acceptedFiles.length === 0) return;
-
-        const data = new FormData();
-        acceptedFiles.forEach((f, ind) => data.append(`file_${ind}`, f));
-
-        return { file: data };
-      case InputMode.Url:
-      case InputMode.Text:
-      default:
-        if (!inputContent) return;
-        break;
-    }
-    return { [mode]: inputContent };
-  }
 
   const getEndPoint = () => {
     switch (mode) {
@@ -76,8 +60,29 @@ const Summarizer = () => {
     }
   }
 
+  const getPayload = () => {
+    switch (mode) {
+      case InputMode.Files:
+        if (acceptedFiles.length === 0) return;
+
+        let formData = new FormData();
+        formData.append("file", acceptedFiles[0]);
+
+        // TODO: If we want to process multiple files
+        // acceptedFiles.forEach((f, ind) => data.append(`file_${ind}`, f));
+
+        return formData;
+      case InputMode.Url:
+      case InputMode.Text:
+      default:
+        if (!inputContent) return;
+        break;
+    }
+    return { [mode]: inputContent };
+  }
+
   const submitInput = async () => {
-    const payload = getInput();
+    const payload = getPayload();
     if (!payload) return;
 
     const config: AxiosRequestConfig = {
@@ -113,15 +118,13 @@ const Summarizer = () => {
   const inputField = () => {
     switch (mode) {
       case InputMode.Files:
-        return (
-          <section className={styles.fileUploadContainer}>
-            <div {...getRootProps({ className: 'dropzone' })}>
-              <input {...getInputProps()} />
-              <p>Drag 'n' drop some files here, or click to select files</p>
-              <em>(Only *.jpeg and *.png images will be accepted)</em>
-            </div>
-          </section>
-        )
+        return <section className={styles.fileUploadContainer}>
+          <div {...getRootProps({ className: 'dropzone' })}>
+            <input {...getInputProps()} />
+            <p>Drag 'n' drop some files here, or click to select files</p>
+            <em>(Only *.txt files will be accepted)</em>
+          </div>
+        </section>
 
       case InputMode.Text:
       case InputMode.Url:
@@ -136,9 +139,15 @@ const Summarizer = () => {
   return (
     <div className={styles.summarizer}>
 
-      <InputModeButtons mode={mode} setMode={setMode} canSubmit={canSubmit} />
+      <InputModeButtons
+        mode={mode}
+        setMode={setMode}
+        canSubmit={canSubmit}
+        rowLength={rowLength}
+        setRowLength={setRowLength}
+      />
 
-      <div className={styles.inputs}>
+      <div className={styles.inputs} style={{ gap: mode === InputMode.Files ? "1.7%" : "1%" }}>
 
         <div className={styles.input}>
           <div className={styles.inputWrap}>
@@ -158,16 +167,25 @@ const Summarizer = () => {
 
         <div className={styles.outputWrap}>
           <TextareaAutosize
+
             value={summary.join('\n')}
           />
         </div>
       </div>
 
 
-
-
       {!canSubmit && loadProgress < 100 && <CircularProgressWithLabel value={loadProgress} />}
-      <Snackbar open={showSnackBar} autoHideDuration={6000} onClose={e => setShowSnackBar(false)}>
+
+      <div className={styles.bottomContent}>
+        <FillerContent />
+        <LoginForm />
+      </div>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={showSnackBar}
+        autoHideDuration={6000}
+        onClose={e => setShowSnackBar(false)}>
         {alert}
       </Snackbar>
 
