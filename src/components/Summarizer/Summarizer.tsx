@@ -1,8 +1,8 @@
 import styles from "./Summarize.module.css";
-import { Alert, AlertTitle, Button, Snackbar, TextareaAutosize } from '@mui/material';
-import { DropzoneArea, FileObject } from 'material-ui-dropzone';
+import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
 import { useState } from 'react';
 import { InputMode } from "./InputMode";
+import { useDropzone } from "react-dropzone";
 import axios, { AxiosRequestConfig } from "axios";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
 import InputModeButtons from "./InputModeSelector";
@@ -21,12 +21,20 @@ const successAlert = <Alert severity="success">
 
 const errorAlert = <Alert severity="error">
   {/* <AlertTitle>Error</AlertTitle> */}
-  <strong>Failed to summarized</strong>
+  <strong>Failed to summarize</strong>
 </Alert>;
 
 const Summarizer = () => {
   const [mode, setMode] = useState(InputMode.Text);
-  const [inputFiles, setFiles] = useState<File[]>([]);
+
+  const {
+    acceptedFiles,
+    fileRejections,
+    getRootProps,
+    getInputProps
+  } = useDropzone({
+    accept: '.txt'
+  });
   const [inputContent, setInputContent] = useState("");
 
   const [loadProgress, setLoadProgress] = useState(0);
@@ -36,15 +44,14 @@ const Summarizer = () => {
   const [alert, setAlert] = useState(successAlert);
 
   const [summary, setSummary] = useState<string[]>([]);
-  console.log(summary);
 
   const getInput = () => {
     switch (mode) {
       case InputMode.Files:
-        if (inputFiles.length === 0) return;
+        if (acceptedFiles.length === 0) return;
 
         const data = new FormData();
-        inputFiles.forEach((f, ind) => data.append(`file_${ind}`, f));
+        acceptedFiles.forEach((f, ind) => data.append(`file_${ind}`, f));
 
         return { file: data };
       case InputMode.Url:
@@ -83,24 +90,21 @@ const Summarizer = () => {
     setCanSubmit(false);
     const requestSummary = async () => {
       try {
-        // const { data } = await axios.post(`${baseUrl}/${api}/${getEndPoint()}`, payload, config);
-        // setSummary(data.summary);
-        setAlert(successAlert);
+        const { data } = await axios.post(`${baseUrl}/${api}/${getEndPoint()}`, payload, config);
+        if (data.summary instanceof Array) {
+          setSummary(data.summary);
+          setAlert(successAlert);
+        } else {
+          setAlert(errorAlert);
+        }
       } catch (err) {
         console.error(err);
         setAlert(errorAlert);
       }
 
-      let i = 1;
-      let interval = setInterval(() => {
-        setLoadProgress(i * 10);
-        if (i === 10) {
-          clearInterval(interval);
-          setCanSubmit(true);
-          setShowSnackBar(true);
-        }
-        i++;
-      }, 100);
+      setShowSnackBar(true);
+      setCanSubmit(true);
+
     }
 
     requestSummary();
@@ -109,11 +113,16 @@ const Summarizer = () => {
   const inputField = () => {
     switch (mode) {
       case InputMode.Files:
-        return <DropzoneArea
-          acceptedFiles={[".txt"]}
-          dropzoneText={"Drag and drop a document here or click"}
-          onChange={(files) => setFiles(files)}
-        />;
+        return (
+          <section className={styles.fileUploadContainer}>
+            <div {...getRootProps({ className: 'dropzone' })}>
+              <input {...getInputProps()} />
+              <p>Drag 'n' drop some files here, or click to select files</p>
+              <em>(Only *.jpeg and *.png images will be accepted)</em>
+            </div>
+          </section>
+        )
+
       case InputMode.Text:
       case InputMode.Url:
       default:
@@ -131,21 +140,30 @@ const Summarizer = () => {
 
       <div className={styles.inputs}>
 
-        <div className={styles.inputWrap}>{inputField()}</div>
+        <div className={styles.input}>
+          <div className={styles.inputWrap}>
+            {inputField()}
+          </div>
+
+          <div className={styles.submitBtnWrap}>
+            <Button
+              className={`${styles.button} ${styles.submitBtn}`}
+              onClick={submitInput}
+              disabled={!canSubmit}
+            >
+              Submit
+            </Button>
+          </div>
+        </div>
+
         <div className={styles.outputWrap}>
           <TextareaAutosize
-            value={summary}
+            value={summary.join('\n')}
           />
         </div>
       </div>
 
-      <Button
-        className={styles.button}
-        onClick={submitInput}
-        disabled={!canSubmit}
-      >
-        Submit
-      </Button>
+
 
 
       {!canSubmit && loadProgress < 100 && <CircularProgressWithLabel value={loadProgress} />}
@@ -153,7 +171,6 @@ const Summarizer = () => {
         {alert}
       </Snackbar>
 
-      {/* {loadProgress === 100 && "Loading Complete"} */}
     </div >
   )
 }
