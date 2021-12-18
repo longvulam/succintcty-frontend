@@ -10,6 +10,7 @@ import { useDropzone } from "react-dropzone";
 import { baseUrl } from "../../appConfig";
 import FillerContent from "../FillerContent/FillerContent";
 import { fetchSummary } from "../../api/summary.api";
+import { Console } from "console";
 
 const textEndPoint = "text";
 const urlEndPoint = "url";
@@ -43,7 +44,7 @@ const Summarizer = () => {
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [alert, setAlert] = useState(successAlert);
   const [summary, setSummary] = useState<string[]>([]);
-  const [rowLength, setRowLength] = useState<number>();
+  const [summaryLength, setSummaryLength] = useState<number>();
 
 
   const getEndPoint = () => {
@@ -74,10 +75,9 @@ const Summarizer = () => {
       case InputMode.Url:
       case InputMode.Text:
       default:
-        if (!inputContent) return;
-        break;
+        if (inputContent) return { [mode]: inputContent };
     }
-    return { [mode]: inputContent };
+    return undefined;
   }
 
   const submitInput = async () => {
@@ -141,8 +141,8 @@ const Summarizer = () => {
         mode={mode}
         setMode={setMode}
         canSubmit={canSubmit}
-        rowLength={rowLength}
-        setRowLength={setRowLength}
+        rowLength={summaryLength}
+        setRowLength={setSummaryLength}
       />
 
       <div className={styles.inputs} style={{ gap: mode === InputMode.Files ? "1.7%" : "1%" }}>
