@@ -26,6 +26,11 @@ const errorAlert = <Alert severity="error">
   <strong>Failed to summarize</strong>
 </Alert>;
 
+const summaryErrorAlert = <Alert severity="error">
+  {/* <AlertTitle>Error</AlertTitle> */}
+  <strong>Summary Length should be a positive integer</strong>
+</Alert>;
+
 const Summarizer = () => {
   const [mode, setMode] = useState(InputMode.Text);
 
@@ -75,6 +80,16 @@ const Summarizer = () => {
       case InputMode.Url:
       case InputMode.Text:
       default:
+        if (summaryLength && inputContent) {
+          if (summaryLength < 1) {
+            setAlert(summaryErrorAlert);
+            setShowSnackBar(true);
+            return;
+          }
+
+          return { [mode]: inputContent, summary_length: summaryLength };
+        };
+
         if (inputContent) return { [mode]: inputContent };
     }
     return undefined;
