@@ -1,6 +1,6 @@
 :root {
     --buttonColor: white;
-    --buttonBackground: black;
+    --buttonBackground: #6B38FB;
 }
 
 .summarizer {
@@ -11,16 +11,22 @@
     gap: 20px;
 }
 
-.buttons {
+
+.modeButtons {
     display: flex;
-    justify-content: center;
-    gap: 5%;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    padding-left: 19%;
+    gap: 12px;
 }
+
+.modeLabel {}
 
 .button {
     color: var(--buttonColor) !important;
     background-color: var(--buttonBackground) !important;
-    transition: 0.3s;
+    opacity: 0.7;
 }
 
 .button:disabled {
@@ -30,7 +36,8 @@
 }
 
 .button:hover {
-    opacity: .6;
+    transition: 0.3s;
+    opacity: 1;
     color: var(--buttonColor) !important;
     background-color: var(--buttonBackground) !important;
 }
@@ -38,7 +45,8 @@
 .inputs {
     display: flex;
     justify-content: center;
-    gap: 5%;
+    width: 100%;
+    gap: 1%;
 }
 
 .inputWrap input,
@@ -49,6 +57,6 @@ textarea {
 
 .inputWrap,
 .outputWrap {
-    width: 512px;
+    width: 40%;
     height: 240px;
 }

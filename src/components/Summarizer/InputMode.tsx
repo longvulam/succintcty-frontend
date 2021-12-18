@@ -1,3 +1,5 @@
 export enum InputMode {
-  text, url, files
+  Text = "text",
+  Url = "url",
+  Files = "files"
 }

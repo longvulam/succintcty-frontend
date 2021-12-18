@@ -1,0 +1,12 @@
+.header{
+  display: flex;
+  justify-content: right;
+  padding: 1%;
+  padding-left: 5%;
+}
+
+.logo {
+  width: 200px;
+  overflow: hidden;
+  margin: 0;
+}
