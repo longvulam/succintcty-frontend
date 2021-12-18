@@ -11,3 +11,12 @@ export const requestLogin = async (payload: {email: string, password: string}) =
     return;
   }
 }
+
+export const requestRegistration = async (payload: any) => {
+  try {
+    const { data } = await axios.post(`${baseUrl}/${api}/users/register`, payload);
+    return data;
+  } catch (error) {
+    return;
+  }
+}

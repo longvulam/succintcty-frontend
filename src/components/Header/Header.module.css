@@ -11,11 +11,14 @@
   margin: 0;
 }
 
-.loginFormBtn {
+.userButtonsContainer {
   position: absolute !important;
   right: 0;
   margin: 40px !important;
+}
+
+.userFormBtn {
   color: white;
   background-color: #252525 !important;
-  
+  margin-left: 20px;
 }
