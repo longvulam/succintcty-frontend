@@ -11,9 +11,11 @@ const Home = () => {
   return (
     <AppContext.Provider value={appContext}>
       <div className={styles.page}>
-        <Header />
-        <Summarizer />
-      <Footer />
+        <div>
+          <Header />
+          <Summarizer />
+        </div>
+        <Footer />
       </div>
     </AppContext.Provider>
   )
