@@ -1,7 +1,7 @@
 import styles from "./Summarize.module.css";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
 import InputModeButtons from "./InputModeSelector";
-import  { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
 import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
 import { useState } from 'react';
 import { InputMode } from "./InputMode";
@@ -37,7 +37,8 @@ const Summarizer = () => {
     getRootProps,
     getInputProps
   } = useDropzone({
-    accept: '.txt'
+    accept: '.txt, .docx, .pdf',
+    maxFiles: 1
   });
 
   const [inputContent, setInputContent] = useState("");
