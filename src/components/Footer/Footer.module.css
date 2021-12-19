@@ -2,4 +2,10 @@
   display: flex;
   justify-content: center;
   padding: 1%;
+  padding-left: 5%;
+}
+
+.footertext {
+  font-style: italic;
+  font-size: 0.8rem;
 }
