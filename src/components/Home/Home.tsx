@@ -1,9 +1,8 @@
 import styles from "./Home.module.css";
-import Summarizer from "../Summarizer/Summarizer";
 import Header from "../Header/Header";
-import { AppContext, useAppContext } from "../store/AppContext";
-
 import Footer from "../Footer/Footer";
+import Summarizer from "../Summarizer/Summarizer";
+import { AppContext, useAppContext } from "../store/AppContext";
 
 const Home = () => {
   const appContext = useAppContext();
