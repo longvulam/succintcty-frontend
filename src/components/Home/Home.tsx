@@ -3,6 +3,7 @@ import Summarizer from "../Summarizer/Summarizer";
 import Header from "../Header/Header";
 import { AppContext, useAppContext } from "../store/AppContext";
 
+import Footer from "../Footer/Footer";
 
 const Home = () => {
   const appContext = useAppContext();
@@ -12,6 +13,7 @@ const Home = () => {
       <div className={styles.page}>
         <Header />
         <Summarizer />
+      <Footer />
       </div>
     </AppContext.Provider>
   )
