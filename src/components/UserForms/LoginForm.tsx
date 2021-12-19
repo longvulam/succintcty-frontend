@@ -2,6 +2,7 @@ import styles from "./UserForms.module.css";
 import { useState } from "react";
 import { requestLogin } from "../../api/user.api";
 import { Alert, Snackbar } from '@mui/material';
+import { useAppStore } from "../store/AppContext";
 import ThemedButton from "../ThemedButton/ThemedButton";
 
 const loginSuccessAlert = <Alert severity="success">
@@ -17,6 +18,7 @@ const loginErrorAlert = <Alert severity="error">
 
 
 const LoginForm = () => {
+  const { isLoggedIn, setIsLoggedIn } =  useAppStore();
   const [alert, setAlert] = useState(loginSuccessAlert);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [username, setUsername] = useState("");
@@ -26,6 +28,7 @@ const LoginForm = () => {
     const res = await requestLogin({ email: username, password: password });
     if (res) {
       setAlert(loginSuccessAlert);
+      setIsLoggedIn(true);
     } else {
       setAlert(loginErrorAlert);
     }

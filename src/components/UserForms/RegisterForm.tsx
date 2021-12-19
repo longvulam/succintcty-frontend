@@ -1,8 +1,9 @@
 import styles from "./UserForms.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { requestRegistration } from "../../api/user.api";
 import { Alert, Snackbar } from '@mui/material';
 import ThemedButton from "../ThemedButton/ThemedButton";
+import { useAppStore } from "../store/AppContext";
 
 const registerationSuccessAlert = <Alert severity="success">
   {/* <AlertTitle>Success</AlertTitle> */}
@@ -16,6 +17,7 @@ const registrationErrorAlert = <Alert severity="error">
 </Alert>;
 
 const RegisterForm = () => {
+  const { isLoggedIn, setIsLoggedIn } =  useAppStore();
   const [alert, setAlert] = useState(registerationSuccessAlert);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [username, setUsername] = useState("");
@@ -25,6 +27,7 @@ const RegisterForm = () => {
     const res = await requestRegistration({ email: username, password });
     if (res) {
       setAlert(registerationSuccessAlert);
+      setIsLoggedIn(true);
     } else {
       setAlert(registrationErrorAlert);
     }
