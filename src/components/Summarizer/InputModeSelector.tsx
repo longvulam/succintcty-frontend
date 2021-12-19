@@ -40,7 +40,7 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
 
   return (<div className={styles.modeButtons}>
 
-    <span className={styles.modeLabel}>Modes:</span>
+    <span className={styles.modeLabel}>Mode</span>
 
     {Object.entries(InputMode).map(entry => {
       const value = entry[1];
@@ -58,8 +58,9 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
 
     <div className={styles.rowLength}>
 
-      <InputLabel htmlFor="summaryLengthInput">
-        Summary length
+      <InputLabel htmlFor="summaryLengthInput"
+        className={styles.summaryLengthLabel}>
+        Summary Length
       </InputLabel>
 
       <TextField

@@ -109,3 +109,17 @@
     align-items: center;
     margin-right: 12px;
 }
+
+.summaryLengthLabel {
+    font-family: 'Libre Franklin', sans-serif !important;
+    font-weight: bold !important;
+    color: black !important;
+    font-size: large !important;
+} 
+
+.modeLabel {
+    font-family: 'Libre Franklin', sans-serif !important;
+    font-weight: bold !important;
+    color: black !important;
+    font-size: large !important;
+}
