@@ -38,8 +38,9 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
     }
   </Select>
 
-  return (<div className={styles.modeButtons}>
-    <div>
+  return (<div className={styles.modeConfigs}>
+
+    <div className={styles.modeButtons}>
       <span className={styles.modeLabel}>Mode</span>
 
       {Object.entries(InputMode).map(entry => {
@@ -57,7 +58,8 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
       })}
 
     </div>
-    <div className={styles.rowLength}>
+
+    <div className={styles.summaryLength}>
 
       <InputLabel htmlFor="summaryLengthInput"
         className={styles.summaryLengthLabel}>
@@ -66,6 +68,7 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
 
       <TextField
         id="summaryLengthInput"
+        className={styles.summaryLengthInput}
         value={summaryLength === 0 ? undefined : summaryLength}
         onChange={e => setRowLength(Number(e.target.value))}
         type="number"
