@@ -1,6 +1,4 @@
 import styles from './FillerContent.module.css';
-import { IconButton } from '@mui/material';
-import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 import { useState } from 'react';
 
 const FillerContent = () => {

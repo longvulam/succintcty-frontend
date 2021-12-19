@@ -1,8 +1,3 @@
-:root {
-    --buttonColor: white;
-    --buttonBackground: #6B38FB;
-    --textareaHeight: 300px;
-}
 
 .summarizer {
     display: flex;

@@ -1,0 +1,18 @@
+.themedButton {
+  color: var(--buttonColor) !important;
+  background-color: var(--buttonBackground) !important;
+  opacity: 0.7;
+}
+
+.themedButton:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+  opacity: 0.7;
+}
+
+.themedButton:hover {
+  transition: 0.3s;
+  opacity: 1;
+  color: var(--buttonColor) !important;
+  background-color: var(--buttonBackground) !important;
+}

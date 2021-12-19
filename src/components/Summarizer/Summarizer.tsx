@@ -1,13 +1,11 @@
 import styles from "./Summarize.module.css";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
 import InputModeButtons from "./InputModeSelector";
-import LoginForm from "../LoginForm/LoginForm";
-import axios, { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
 import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
 import { useState } from 'react';
 import { InputMode } from "./InputMode";
 import { useDropzone } from "react-dropzone";
-import { baseUrl } from "../../appConfig";
 import FillerContent from "../FillerContent/FillerContent";
 import { fetchSummary } from "../../api/summary.api";
 
@@ -25,6 +23,11 @@ const errorAlert = <Alert severity="error">
   <strong>Failed to summarize</strong>
 </Alert>;
 
+const summaryErrorAlert = <Alert severity="error">
+  {/* <AlertTitle>Error</AlertTitle> */}
+  <strong>Summary Length should be a positive integer</strong>
+</Alert>;
+
 const Summarizer = () => {
   const [mode, setMode] = useState(InputMode.Text);
 
@@ -34,7 +37,8 @@ const Summarizer = () => {
     getRootProps,
     getInputProps
   } = useDropzone({
-    accept: '.txt'
+    accept: '.txt, .docx, .pdf',
+    maxFiles: 1
   });
 
   const [inputContent, setInputContent] = useState("");
@@ -43,7 +47,7 @@ const Summarizer = () => {
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [alert, setAlert] = useState(successAlert);
   const [summary, setSummary] = useState<string[]>([]);
-  const [rowLength, setRowLength] = useState<number>();
+  const [summaryLength, setSummaryLength] = useState<number>();
 
 
   const getEndPoint = () => {
@@ -74,10 +78,19 @@ const Summarizer = () => {
       case InputMode.Url:
       case InputMode.Text:
       default:
-        if (!inputContent) return;
-        break;
+        if (summaryLength && inputContent) {
+          if (summaryLength < 1) {
+            setAlert(summaryErrorAlert);
+            setShowSnackBar(true);
+            return;
+          }
+
+          return { [mode]: inputContent, summary_length: summaryLength };
+        };
+
+        if (inputContent) return { [mode]: inputContent };
     }
-    return { [mode]: inputContent };
+    return undefined;
   }
 
   const submitInput = async () => {
@@ -141,8 +154,8 @@ const Summarizer = () => {
         mode={mode}
         setMode={setMode}
         canSubmit={canSubmit}
-        rowLength={rowLength}
-        setRowLength={setRowLength}
+        rowLength={summaryLength}
+        setRowLength={setSummaryLength}
       />
 
       <div className={styles.inputs} style={{ gap: mode === InputMode.Files ? "1.7%" : "1%" }}>
@@ -176,7 +189,6 @@ const Summarizer = () => {
 
       <div className={styles.bottomContent}>
         <FillerContent />
-        <LoginForm />
       </div>
 
       <Snackbar
