@@ -10,10 +10,11 @@
 .modeButtons {
     display: flex;
     justify-content: left;
-    align-items: center;
+    align-items: f;
     align-self: flex-start;
     margin-left: 9.6%;
     gap: 12px;
+    flex-direction: column-reverse;
 }
 
 .bottomContent {
@@ -70,6 +71,9 @@
     height: 100% !important;
     overflow-y: auto !important;
     resize: none;
+    font-family:'Merriweather', serif;
+    font-size: 14px;
+    font-weight: normal;
 }
 
 .inputWrap {

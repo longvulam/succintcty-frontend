@@ -39,23 +39,24 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
   </Select>
 
   return (<div className={styles.modeButtons}>
+    <div>
+      <span className={styles.modeLabel}>Mode</span>
 
-    <span className={styles.modeLabel}>Mode</span>
+      {Object.entries(InputMode).map(entry => {
+        const value = entry[1];
+        const key = entry[0];
+        return (
+          <ThemedButton key={key}
+            className={styles.button}
+            disabled={!canSubmit}
+            style={value === mode ? activeStyle : defaultStyle}
+            onClick={e => setMode(value)}>
+            {key}
+          </ThemedButton>
+        )
+      })}
 
-    {Object.entries(InputMode).map(entry => {
-      const value = entry[1];
-      const key = entry[0];
-      return (
-        <ThemedButton key={key}
-          className={styles.button}
-          disabled={!canSubmit}
-          style={value === mode ? activeStyle : defaultStyle}
-          onClick={e => setMode(value)}>
-          {key}
-        </ThemedButton>
-      )
-    })}
-
+    </div>
     <div className={styles.rowLength}>
 
       <InputLabel htmlFor="summaryLengthInput"
