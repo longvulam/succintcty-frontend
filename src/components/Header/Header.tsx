@@ -3,6 +3,7 @@ import appLogo from "../../media/App_logo.png";
 import { Box, Button, Modal, SxProps, Theme } from "@mui/material";
 import { useState } from "react";
 import LoginForm from "../UserForms/LoginForm";
+import RegisterForm from "../UserForms/RegisterForm";
 
 const style: SxProps<Theme> = {
   position: 'absolute',
@@ -18,28 +19,50 @@ const style: SxProps<Theme> = {
   pb: 3,
 };
 
+enum UserFormMode {
+  Login,
+  Register
+}
+
 const Header = () => {
-  const [loginFormOpen, showLoginForm] = useState(false);
+  const [mode, setMode] = useState(UserFormMode.Login);
+  const [isFormOpen, showForm] = useState(false);
 
   return (
     <div className={styles.header}>
-      <img className={styles.logo} src={appLogo} alt="logo of succinct" />
+      <img className={styles.logo} src={appLogo} alt="logo of Succinct" />
 
-      <Button variant="contained"
-        className={styles.loginFormBtn}
-        onClick={() => showLoginForm(true)}
-      >
-        Login
-      </Button>
+      <div className={styles.userButtonsContainer}>
+        <Button variant="contained"
+          className={styles.userFormBtn}
+          onClick={() => {
+            setMode(UserFormMode.Login);
+            showForm(true);
+          }}
+        >
+          Login
+        </Button>
+
+        <Button variant="contained"
+          className={styles.userFormBtn}
+          onClick={() => {
+            setMode(UserFormMode.Register);
+            showForm(true);
+          }}
+        >
+          Register
+        </Button>
+      </div>
 
       <Modal
-        open={loginFormOpen}
-        onClose={() => showLoginForm(false)}
+        open={isFormOpen}
+        onClose={() => showForm(false)}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: 400 }}>
-          <LoginForm />
+          {mode === UserFormMode.Login && <LoginForm />}
+          {mode === UserFormMode.Register && <RegisterForm />}
         </Box>
       </Modal>
     </div>

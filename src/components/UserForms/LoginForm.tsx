@@ -1,7 +1,8 @@
-import styles from "./LoginForm.module.css";
+import styles from "./UserForms.module.css";
 import { useState } from "react";
 import { requestLogin } from "../../api/user.api";
 import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
+import ThemedButton from "../ThemedButton/ThemedButton";
 
 const loginSuccessAlert = <Alert severity="success">
   {/* <AlertTitle>Success</AlertTitle> */}
@@ -43,7 +44,7 @@ const LoginForm = () => {
           <label htmlFor="password">password: </label>
           <input id="password" type="password" value={password} onChange={e => setPassword(e.currentTarget.value)} />
         </p>
-        <Button onClick={tryLogin}>Submit</Button>
+        <ThemedButton onClick={tryLogin}>Submit</ThemedButton>
       </form>
 
       <Snackbar

@@ -1,7 +1,8 @@
 import styles from "./Summarize.module.css";
-import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import { InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import { InputMode } from "./InputMode"
 import { CSSProperties } from "react";
+import ThemedButton from "../ThemedButton/ThemedButton";
 
 interface InputModeButtonsProps {
   setMode: (value: InputMode) => void;
@@ -45,13 +46,13 @@ const InputModeButtons = (props: InputModeButtonsProps) => {
       const value = entry[1];
       const key = entry[0];
       return (
-        <Button key={key}
+        <ThemedButton key={key}
           className={styles.button}
           disabled={!canSubmit}
           style={value === mode ? activeStyle : defaultStyle}
           onClick={e => setMode(value)}>
           {key}
-        </Button>
+        </ThemedButton>
       )
     })}
 
