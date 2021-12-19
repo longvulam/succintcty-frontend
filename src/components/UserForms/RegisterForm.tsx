@@ -6,7 +6,7 @@ import ThemedButton from "../ThemedButton/ThemedButton";
 
 const registerationSuccessAlert = <Alert severity="success">
   {/* <AlertTitle>Success</AlertTitle> */}
-  <strong>Registration Successfull</strong>
+  <strong>Registration Successful</strong>
 </Alert>;
 
 
