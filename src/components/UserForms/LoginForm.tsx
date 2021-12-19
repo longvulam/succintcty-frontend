@@ -1,7 +1,7 @@
 import styles from "./UserForms.module.css";
 import { useState } from "react";
 import { requestLogin } from "../../api/user.api";
-import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import ThemedButton from "../ThemedButton/ThemedButton";
 
 const loginSuccessAlert = <Alert severity="success">

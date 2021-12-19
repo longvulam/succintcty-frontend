@@ -1,15 +1,34 @@
 import styles from "./UserForms.module.css";
 import { useState } from "react";
 import { requestRegistration } from "../../api/user.api";
+import { Alert, Snackbar } from '@mui/material';
 import ThemedButton from "../ThemedButton/ThemedButton";
 
+const registerationSuccessAlert = <Alert severity="success">
+  {/* <AlertTitle>Success</AlertTitle> */}
+  <strong>Registration Successfull</strong>
+</Alert>;
+
+
+const registrationErrorAlert = <Alert severity="error">
+  {/* <AlertTitle>Error</AlertTitle> */}
+  <strong>Something wrong happened!</strong>
+</Alert>;
+
 const RegisterForm = () => {
+  const [alert, setAlert] = useState(registerationSuccessAlert);
+  const [showSnackBar, setShowSnackBar] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const tryRegister = async () => {
     const res = await requestRegistration({ email: username, password });
-    console.log(res);
+    if (res) {
+      setAlert(registerationSuccessAlert);
+    } else {
+      setAlert(registrationErrorAlert);
+    }
+    setShowSnackBar(true);
   }
 
   return (
@@ -26,6 +45,14 @@ const RegisterForm = () => {
         </p>
         <ThemedButton onClick={tryRegister}>Submit</ThemedButton>
       </form>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={showSnackBar}
+        autoHideDuration={6000}
+        onClose={e => setShowSnackBar(false)}>
+        {alert}
+      </Snackbar>
     </div>
   )
 }
