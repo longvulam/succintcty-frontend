@@ -1,3 +1,56 @@
 .container {
-  display: flex;
+  display: grid;
+  max-width: 42rem;
+  text-align: center;
+}
+
+.blub {
+  font-size: 1rem;
+}
+
+.files {
+  font-size: 1rem;
+}
+
+.curl {
+  text-align: start;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  font-size: 0.8rem;
+  visibility: hidden;
+  width: 6rem;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  left: 45%;
+  bottom: 50%;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  cursor: pointer;
+  visibility: visible;
+  opacity: 1;
 }
