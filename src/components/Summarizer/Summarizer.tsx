@@ -136,6 +136,14 @@ const Summarizer = () => {
             <p>Drag 'n' drop some files here, or click to select files</p>
             <em>(Only {acceptedFilesTypes} files will be accepted)</em>
           </div>
+          <div>
+            <ul>
+              {acceptedFiles.map(f =>
+                <li>{f.name}</li>
+              )}
+            </ul>
+          </div>
+
         </section>
 
       case InputMode.Text:
