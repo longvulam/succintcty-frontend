@@ -1,16 +1,34 @@
 import styles from "./LoginForm.module.css";
 import { useState } from "react";
-import { Button } from "@mui/material";
 import { requestLogin } from "../../api/user.api";
+import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
+
+const loginSuccessAlert = <Alert severity="success">
+  {/* <AlertTitle>Success</AlertTitle> */}
+  <strong>Login Successfull</strong>
+</Alert>;
+
+
+const loginErrorAlert = <Alert severity="error">
+  {/* <AlertTitle>Error</AlertTitle> */}
+  <strong>User name or paswword are incorrect</strong>
+</Alert>;
 
 
 const LoginForm = () => {
+  const [alert, setAlert] = useState(loginSuccessAlert);
+  const [showSnackBar, setShowSnackBar] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const tryLogin = async () => {
-    const res = await requestLogin({ email: username, password });
-    console.log(res);
+    const res = await requestLogin({ email: username, password: password });
+    if (res) {
+      setAlert(loginSuccessAlert);
+    } else {
+      setAlert(loginErrorAlert);
+    }
+    setShowSnackBar(true);
   }
 
   return (
@@ -27,6 +45,14 @@ const LoginForm = () => {
         </p>
         <Button onClick={tryLogin}>Submit</Button>
       </form>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={showSnackBar}
+        autoHideDuration={6000}
+        onClose={e => setShowSnackBar(false)}>
+        {alert}
+      </Snackbar>
     </div>
   )
 }

@@ -11,3 +11,21 @@ export const requestLogin = async (payload: {email: string, password: string}) =
     return;
   }
 }
+
+export const requestLogout = async () => {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${api}/users/logout`);
+    return data;
+  } catch (error) {
+    return;
+  }
+}
+
+export const requestCurrentUser = async () => {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${api}/users/current_users`);
+    return data;
+  } catch (error) {
+    return;
+  }
+}
