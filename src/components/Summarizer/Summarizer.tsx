@@ -1,13 +1,14 @@
 import styles from "./Summarize.module.css";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
 import InputModeButtons from "./InputModeSelector";
+import FillerContent from "../FillerContent/FillerContent";
 import { AxiosRequestConfig } from "axios";
 import { Alert, Button, Snackbar, TextareaAutosize } from '@mui/material';
 import { useState } from 'react';
 import { InputMode } from "./InputMode";
 import { useDropzone } from "react-dropzone";
-import FillerContent from "../FillerContent/FillerContent";
 import { fetchSummary } from "../../api/summary.api";
+import { acceptedFilesTypes } from "../../constants";
 
 const textEndPoint = "text";
 const urlEndPoint = "url";
@@ -37,7 +38,7 @@ const Summarizer = () => {
     getRootProps,
     getInputProps
   } = useDropzone({
-    accept: '.txt, .docx, .pdf',
+    accept: acceptedFilesTypes,
     maxFiles: 1
   });
 
@@ -133,7 +134,7 @@ const Summarizer = () => {
           <div {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
             <p>Drag 'n' drop some files here, or click to select files</p>
-            <em>(Only *.txt files will be accepted)</em>
+            <em>(Only {acceptedFilesTypes} files will be accepted)</em>
           </div>
         </section>
 
